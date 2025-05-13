@@ -9,8 +9,7 @@ public class Juego extends InterfaceJuego
     private Personaje mago;
     
     // Control del movimiento
-    private boolean movimientoVertical;
-    private boolean movimientoHorizontal;
+    private boolean enMovimiento;
     
     Juego()
     {
@@ -19,8 +18,7 @@ public class Juego extends InterfaceJuego
         this.mago = new Personaje(400, 300);
         
         // Inicializar variables de control
-        this.movimientoVertical = false;
-        this.movimientoHorizontal = false;
+        this.enMovimiento = false;
         
         // Inicia el juego!
         this.entorno.iniciar();
@@ -34,31 +32,36 @@ public class Juego extends InterfaceJuego
      */
     public void tick()
     {
-        // Resetear variables de control en cada tick
-        movimientoVertical = false;
-        movimientoHorizontal = false;
+        // Acumular el movimiento
+        double dx = 0;
+        double dy = 0;
         
         // Procesamiento de un instante de tiempo
         // Comprobar teclas y mover al personaje
         if(entorno.estaPresionada('W')) {
-            this.mago.mover(-2, 0);
-            movimientoVertical = true;
-        }
-        if(entorno.estaPresionada('S')) {
-            this.mago.mover(2, 0);
-            movimientoVertical = true;
-        }
-        if(entorno.estaPresionada('D')) {
-            this.mago.mover(0, 2);
-            movimientoHorizontal = true;
-        }
-        if(entorno.estaPresionada('A')) {
-            this.mago.mover(0, -2);
-            movimientoHorizontal = true;
+        	dy = -2;
         }
         
+        if(entorno.estaPresionada('S')) {
+        	dy = 2;
+        }
+        
+        if(entorno.estaPresionada('D')) {
+        	dx = 2;
+        }
+        
+        if(entorno.estaPresionada('A')) {
+        	dx = -2;
+        }
+        
+        // Actualizar estado del Movimiento
+        this.enMovimiento = (dx != 0 || dy != 0);
+        
+        // Mover al personaje
+        this.mago.mover(dx, dy);
+        
         // Si no hay movimiento, detener al personaje
-        if (!movimientoVertical && !movimientoHorizontal) {
+        if (!enMovimiento) {
             this.mago.detener();
         }
         

@@ -1,7 +1,6 @@
 package juego;
 
 import java.awt.Image;
-
 import entorno.Entorno;
 import entorno.Herramientas;
 
@@ -47,25 +46,23 @@ public class Personaje {
         e.dibujarImagen(imagenActual, this.x, this.y, 0, 0.5);
     }
     
-    public void mover(int vertical, int horizontal) {
+    public void mover(double dx, double dy) {
+    	
         // Actualizar posición
-        this.x += horizontal;
-        this.y += vertical;
+        this.x += dx;
+        this.y += dy;
         
         // Actualizar estado
-        if (horizontal != 0 || vertical != 0) {
-            this.enMovimiento = true;
+        this.enMovimiento = (dx != 0 || dy != 0); 
             
-            // Actualizar dirección horizontal en la que mira
-            if (horizontal > 0) {
-                this.mirandoDerecha = true;
-            } else if (horizontal < 0) {
-                this.mirandoDerecha = false;
-            }
-        } else {
-            this.enMovimiento = false;
+            
+        // Actualizar dirección horizontal en la que mira
+        if (dx > 0) {
+            this.mirandoDerecha = true;
+        } else if (dx < 0) {
+            this.mirandoDerecha = false;
         }
-    }
+    } // dx == 0, mantiene la direccion actual
     
     // Método para detener el personaje
     public void detener() {
