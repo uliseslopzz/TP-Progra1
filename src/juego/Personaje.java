@@ -52,6 +52,11 @@ public class Personaje {
         this.x += dx;
         this.y += dy;
         
+        if (this.x < 20) this.x = 20;
+        if (this.x > 780) this.x = 780;
+        if (this.y < 15) this.y = 15;
+        if (this.y > 570) this.y = 570;
+        
         // Actualizar estado
         this.enMovimiento = (dx != 0 || dy != 0); 
             
@@ -67,5 +72,13 @@ public class Personaje {
     // Método para detener el personaje
     public void detener() {
         this.enMovimiento = false;
+    }
+    
+    public double getX() {
+    	return this.x;
+    }
+    
+    public double getY() {
+    	return this.y;
     }
 }
